@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser(description='PyTorch Transformer Language Model
 parser.add_argument('--data', type=str, default='../data/wikitext-103',
                     help='location of the data corpus')
 parser.add_argument('--dataset', type=str, default='wt103',
-                    choices=['wt103', 'lm1b', 'enwik8', 'text8'],
+                    choices=['wt103', 'lm1b', 'enwik8', 'text8', 'chunyu'],
                     help='dataset name')
 parser.add_argument('--split', type=str, default='all',
                     choices=['all', 'valid', 'test'],
@@ -103,7 +103,7 @@ elif args.split == 'test':
     valid_loss = None
 
 def format_log(loss, split):
-    if args.dataset in ['enwik8', 'text8']:
+    if args.dataset in ['enwik8', 'text8', 'chunyu']:
         log_str = '| {0} loss {1:5.2f} | {0} bpc {2:9.5f} '.format(
             split, loss, loss / math.log(2))
     else:

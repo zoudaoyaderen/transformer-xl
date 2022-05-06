@@ -654,10 +654,10 @@ class MemTransformerLM(nn.Module):
             else:
                 mask_shift_len = qlen
             dec_attn_mask = (torch.triu(all_ones, 1+mlen)
-                    + torch.tril(all_ones, -mask_shift_len)).byte()[:, :, None] # -1
+                    + torch.tril(all_ones, -mask_shift_len)).bool()[:, :, None] # -1
         else:
             dec_attn_mask = torch.triu(
-                word_emb.new_ones(qlen, klen), diagonal=1+mlen).byte()[:,:,None]
+                word_emb.new_ones(qlen, klen), diagonal=1+mlen).bool()[:,:,None]
 
         hids = []
         if self.attn_type == 0: # default

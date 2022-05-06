@@ -1,4 +1,4 @@
-import os
+import os, random
 from collections import Counter, OrderedDict
 
 import torch
@@ -101,6 +101,8 @@ class Vocab(object):
                 symbols = self.tokenize(line, add_eos=add_eos,
                     add_double_eos=add_double_eos)
                 encoded.append(self.convert_to_tensor(symbols))
+
+        #random.shuffle(encoded)
 
         if ordered:
             encoded = torch.cat(encoded)

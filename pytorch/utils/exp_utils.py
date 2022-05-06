@@ -21,17 +21,20 @@ def create_exp_dir(dir_path, scripts_to_save=None, debug=False):
         print('Debug Mode : no experiment dir created')
         return functools.partial(logging, log_path=None, log_=False)
 
-    if not os.path.exists(dir_path):
-        os.makedirs(dir_path)
+    try:
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
 
-    print('Experiment dir : {}'.format(dir_path))
-    if scripts_to_save is not None:
-        script_path = os.path.join(dir_path, 'scripts')
-        if not os.path.exists(script_path):
-            os.makedirs(script_path)
-        for script in scripts_to_save:
-            dst_file = os.path.join(dir_path, 'scripts', os.path.basename(script))
-            shutil.copyfile(script, dst_file)
+        print('Experiment dir : {}'.format(dir_path))
+        if scripts_to_save is not None:
+            script_path = os.path.join(dir_path, 'scripts')
+            if not os.path.exists(script_path):
+                os.makedirs(script_path)
+            for script in scripts_to_save:
+                dst_file = os.path.join(dir_path, 'scripts', os.path.basename(script))
+                shutil.copyfile(script, dst_file)
+    except:
+        pass
 
     return get_logger(log_path=os.path.join(dir_path, 'log.txt'))
 

@@ -1,0 +1,8 @@
+.vscode/
+*.log*
+nohup.out
+*.pyc
+run*
+test/*
+tags
+conf/en_info*

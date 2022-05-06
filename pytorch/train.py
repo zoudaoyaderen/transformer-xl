@@ -20,7 +20,7 @@ parser = argparse.ArgumentParser(description='PyTorch Transformer Language Model
 parser.add_argument('--data', type=str, default='../data/wikitext-103',
                     help='location of the data corpus')
 parser.add_argument('--dataset', type=str, default='wt103',
-                    choices=['wt103', 'lm1b', 'enwik8', 'text8'],
+                    choices=['wt103', 'lm1b', 'enwik8', 'text8', 'chunyu'],
                     help='dataset name')
 parser.add_argument('--n_layer', type=int, default=12,
                     help='number of total layers')
@@ -484,7 +484,7 @@ def train():
                       '| ms/batch {:5.2f} | loss {:5.2f}'.format(
                 epoch, train_step, batch+1, optimizer.param_groups[0]['lr'],
                 elapsed * 1000 / args.log_interval, cur_loss)
-            if args.dataset in ['enwik8', 'text8']:
+            if args.dataset in ['enwik8', 'text8', 'chunyu']:
                 log_str += ' | bpc {:9.5f}'.format(cur_loss / math.log(2))
             else:
                 log_str += ' | ppl {:9.3f}'.format(math.exp(cur_loss))
@@ -499,7 +499,7 @@ def train():
                       '| valid loss {:5.2f}'.format(
                 train_step // args.eval_interval, train_step,
                 (time.time() - eval_start_time), val_loss)
-            if args.dataset in ['enwik8', 'text8']:
+            if args.dataset in ['enwik8', 'text8', 'chunyu']:
                 log_str += ' | bpc {:9.5f}'.format(val_loss / math.log(2))
             else:
                 log_str += ' | valid ppl {:9.3f}'.format(math.exp(val_loss))
@@ -553,7 +553,7 @@ para_model = model.to(device)
 # Run on test data.
 test_loss = evaluate(te_iter)
 logging('=' * 100)
-if args.dataset in ['enwik8', 'text8']:
+if args.dataset in ['enwik8', 'text8', 'chunyu']:
     logging('| End of training | test loss {:5.2f} | test bpc {:9.5f}'.format(
         test_loss, test_loss / math.log(2)))
 else:

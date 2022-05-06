@@ -210,10 +210,10 @@ def collate_fn(batch, bptt):
         seq_len = min(bptt, max_len - 1 - i)
         end_idx = i + seq_len
         beg_idx = max(0, i - ext_len)
+        if not seq_len or max(end_idx, i + 1 + seq_len) > max_len:
+            continue
         data = batch_t[beg_idx:end_idx]
         target = batch_t[i + 1:i + 1 + seq_len]
-        if not data or not target or not seq_len:
-            continue
         yield data, target, seq_len
 
 
